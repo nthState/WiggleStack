@@ -21,7 +21,9 @@ extension ExampleView: View {
       Text("Hello, mars!")
         .background(Color.green)
 
-      Text("Hello, venus!")
+      Rectangle()
+        .fill(Color.orange)
+        .frame(width: 40, height: 40)
       
     }
   }
