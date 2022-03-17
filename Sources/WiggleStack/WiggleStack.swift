@@ -54,15 +54,13 @@ public struct ShapeContentBuilder {
 
 struct WiggleStack {
 
-  private let innerContent: () -> [Wiggler]
-  private let other: [Wiggler]
+  private let innerContent: [Wiggler]
   private var items: [Wiggler] = []
 
   init(@ShapeContentBuilder innerContent: @escaping () -> [Wiggler]) {
-    self.innerContent = innerContent
-    self.other = innerContent()
+    self.innerContent = innerContent()
     var offset: CGSize = .zero
-    for item in self.other   {
+    for item in self.innerContent   {
 
       let angle = Angle.degrees(Double((0..<15).randomElement()!))
       items.append(Wiggler(id: item.id, view: item.view, offset: offset, rotation: angle))
