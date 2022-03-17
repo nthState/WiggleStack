@@ -17,13 +17,16 @@ extension ExampleView: View {
 
       Text("Hello, world!")
         .padding()
+        .wiggleable()
 
       Text("Hello, mars!")
         .background(Color.green)
+        .wiggleable()
 
       Rectangle()
         .fill(Color.orange)
         .frame(width: 40, height: 40)
+        .wiggleable()
       
     }
   }

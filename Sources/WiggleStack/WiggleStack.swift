@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+extension View {
+
+  public func wiggleable() -> Wiggler {
+    return Wiggler(id: UUID(), view: AnyView(self), offset: .zero, rotation: .zero)
+  }
+
+}
+
 public struct Wiggler: Identifiable, Hashable {
 
   public static func == (lhs: Wiggler, rhs: Wiggler) -> Bool {
@@ -24,9 +32,9 @@ public struct Wiggler: Identifiable, Hashable {
 }
 
 @resultBuilder
-public struct ShapeContentBuilder<V> where V: View {
+public struct ShapeContentBuilder {
 
-  static func buildBlock(_ components: V...) -> [V] {
+  static func buildBlock(_ components: Wiggler...) -> [Wiggler] {
     return components
   }
 
@@ -44,21 +52,21 @@ public struct ShapeContentBuilder<V> where V: View {
 
 }
 
-struct WiggleStack<V> where V: View {
+struct WiggleStack {
 
-  private let innerContent: () -> [V]
-  private let other: [V]
+  private let innerContent: () -> [Wiggler]
+  private let other: [Wiggler]
   private var items: [Wiggler] = []
 
-  init(@ShapeContentBuilder<V> innerContent: @escaping () -> [V]) {
+  init(@ShapeContentBuilder innerContent: @escaping () -> [Wiggler]) {
     self.innerContent = innerContent
     self.other = innerContent()
     var offset: CGSize = .zero
     for item in self.other   {
 
       let angle = Angle.degrees(Double((0..<15).randomElement()!))
-
-      items.append(Wiggler(id: UUID(), view: AnyView(item), offset: offset, rotation: angle))
+      items.append(Wiggler(id: item.id, view: item.view, offset: offset, rotation: angle))
+      //items.append(Wiggler(id: UUID(), view: AnyView(item), offset: offset, rotation: angle))
       offset.width += 0
       offset.height += 20
     }
