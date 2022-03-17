@@ -16,8 +16,10 @@ extension ExampleView: View {
     WiggleStack {
 
       Text("Hello, world!")
+        .padding()
 
       Text("Hello, mars!")
+        .background(Color.green)
 
       Text("Hello, venus!")
       

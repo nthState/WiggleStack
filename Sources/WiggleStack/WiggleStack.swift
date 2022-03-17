@@ -20,6 +20,7 @@ public struct Wiggler: Identifiable, Hashable {
   public let id: UUID
   public let view: AnyView
   public let offset: CGSize
+  public let rotation: Angle
 }
 
 @resultBuilder
@@ -54,7 +55,10 @@ struct WiggleStack<V> where V: View {
     self.other = innerContent()
     var offset: CGSize = .zero
     for item in self.other   {
-      items.append(Wiggler(id: UUID(), view: AnyView(item), offset: offset))
+
+      let angle = Angle.degrees(Double((0..<15).randomElement()!))
+
+      items.append(Wiggler(id: UUID(), view: AnyView(item), offset: offset, rotation: angle))
       offset.width += 0
       offset.height += 20
     }
@@ -69,6 +73,7 @@ extension WiggleStack: View {
       ForEach(items, id: \.self) { item in
         item.view
           .offset(item.offset)
+          .rotationEffect(item.rotation)
       }
     }
   }
