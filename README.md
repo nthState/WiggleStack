@@ -1,3 +1,3 @@
 # WiggleStack
 
-A description of this package.
+A Stack where content can overlap and wriggle
